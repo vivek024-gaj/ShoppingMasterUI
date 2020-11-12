@@ -1,0 +1,297 @@
+<div class="animated fadeIn">
+    <form [formGroup]="dockerForm" (ngSubmit)="submitForm()" novalidate>
+        <div class="row">
+
+            <!-- Form -->
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header"><strong>Docker</strong><small> Form</small></div>
+                    <div class="card-body">
+
+                        <div *ngIf="isSubmitted">
+                            <div class="alert alert-success" *ngIf="isSuccess">
+                                <strong> {{_statusMsg}} Please Wait ..</strong>.
+                            </div>
+
+                            <div class="alert alert-danger" *ngIf="!isSuccess ">
+                                <strong>{{_statusMsg}}</strong>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label>Docker Name</label>
+                                    <input type="text" value="" name="name" class="form-control" formControlName="dockerName" name="dockerName" [ngClass]="{'is-invalid': dockerForm.get('dockerName').touched && dockerForm.get('dockerName').invalid}">
+                                    <div class="invalid-feedback">
+                                        <div>Please Enter Docker Name</div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Image Name</label>
+                                    <input formControlName="image" placeholder="Please Enter Docker Image Path" name="image" class="form-control" type="text" [ngClass]="{'is-invalid': dockerForm.get('image').touched && dockerForm.get('image').invalid}">
+                                    <div class="invalid-feedback">
+                                        <div>Please Enter Image Name</div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>IP-Address</label>
+                                    <input formControlName="ipAddress" placeholder="Please Enter Docker IP Address" name="ipAddress" class="form-control" type="text" [ngClass]="{'is-invalid': dockerForm.get('ipAddress').touched && dockerForm.get('ipAddress').invalid}">
+                                    <div class="invalid-feedback">
+                                        <div>Please Enter IP-Address</div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Image Type</label>
+                                    <select formControlName="dockerType" #type class="browser-default custom-select" (change)="getImageTypeValue(type.value)">
+                                            <option value ="">-- Select --</option>
+                                            <option value="api">API</option>
+                                            <option value="container">Container</option>
+                                            <option value="database">Database</option>
+                                          </select>
+                                    <div class="invalid-feedback">
+                                        <div>Please Select Image TYpe</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- form end -->
+                        </div>
+                        <!--form row end-->
+                        <div class="row ">
+                            <div class="col-sm-6">
+                                <div class="row ">
+                                    <div class="form-group col-sm-3">
+                                        <label>Protocol</label>
+                                        <input type="text" formControlName="protocol" class="form-control">
+                                        <div class="invalid-feedback">
+                                            <div>Please Add Group Name</div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-sm-3">
+                                        <label>Internal Port</label>
+                                        <input type="text" formControlName="internalPort" class="form-control">
+                                        <div class="invalid-feedback">
+                                            <div>Please Add Group Name</div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-sm-3">
+                                        <label>External Port</label>
+                                        <input type="text" formControlName="externalPort" class="form-control">
+                                        <div class="invalid-feedback">
+                                            <div>Please Add Group Name</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <button class="btn btn-primary" (click)="addPort($event)" type="button" style="margin-top: 29px;"><i class="fas fa-plus"></i></button>
+                                    </div>
+                                </div>
+                                <div>
+                                    <table class="table table-responsive-sm table-bordered table-striped table-sm">
+                                        <thead class="thead-light">
+                                            <tr class="text-center">
+                                                <th>Protocol</th>
+                                                <th>Internal Port</th>
+                                                <th>External Port</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let port of portArr;let i=index">
+                                                <td>{{port.protocol}}</td>
+                                                <td>{{port.internalPort}}</td>
+                                                <td>{{port.externalPort}}</td>
+                                                <td class="text-right">
+                                                    <button class="btn btn-brand btn-sm btn-youtube" type="button" (click)="removePort(i)" style="margin-bottom: 4px">
+                                                            <i class="fa fa-close"></i>
+                                                        </button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                            </div>
+                            <div class="col-sm-6" *ngIf="type.value ==='database'">
+                                <div class="row ">
+                                    <div class="form-group col-sm-3">
+                                        <label>Username</label>
+                                        <input type="text" value="" name="name" class="form-control" formControlName="username">
+                                        <div class="invalid-feedback">
+                                            <div>Please Add Group Name</div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-sm-3">
+                                        <label>Password</label>
+                                        <input type="text" value="" name="name" class="form-control" formControlName="password">
+                                        <div class="invalid-feedback">
+                                            <div>Please Add Group Name</div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-sm-3">
+                                        <label>Database</label>
+                                        <input type="text" value="" name="name" class="form-control" formControlName="databaseName">
+                                        <div class="invalid-feedback">
+                                            <div>Please Add Group Name</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <button class="btn btn-primary" (click)="addUser($event)" type="button" style="margin-top: 29px;"><i class="fas fa-plus"></i></button>
+                                    </div>
+                                </div>
+                                <div>
+                                    <table class="table table-responsive-sm table-bordered table-striped table-sm">
+                                        <thead class="thead-light">
+                                            <tr class="text-center">
+                                                <th>Username</th>
+                                                <th>Password</th>
+                                                <th>Database</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody *ngFor="let port of userArr;let i=index">
+                                            <tr>
+                                                <td>{{port.username}}</td>
+                                                <td>{{port.password}}</td>
+                                                <td>{{port.databaseName}}</td>
+                                                <td class="text-right">
+                                                    <button class="btn btn-brand btn-sm btn-youtube" type="button" (click)="removeUser(i)" style="margin-bottom: 4px">
+                                                                <i class="fa fa-close"></i>
+                                                            </button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                            </div>
+                            <div class="col-sm-6" *ngIf="type.value ==='api'">
+                                <div class="row ">
+                                    <div class="form-group col-sm-8">
+                                        <label>Endpoint Url</label>
+                                        <input type="text" value="" name="name" class="form-control" formControlName="endpointUrl">
+                                        <div class="invalid-feedback">
+                                            <div>Please Add Group Name</div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-sm-2">
+                                        <label>Method Type</label>
+                                        <input type="text" value="" name="name" class="form-control" formControlName="methodType">
+                                        <div class="invalid-feedback">
+                                            <div>Please Add Group Name</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-2">
+                                        <button class="btn btn-primary" (click)="addApi($event)" type="button" style="margin-top: 29px;"><i class="fas fa-plus"></i></button>
+                                    </div>
+                                </div>
+                                <div>
+                                    <table class="table table-responsive-sm table-bordered table-striped table-sm">
+                                        <thead class="thead-light">
+                                            <tr class="text-center">
+                                                <th>EndPoint Url</th>
+                                                <th>Method Type</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody *ngFor="let port of apiArr;let i=index">
+                                            <tr>
+                                                <td>{{port.endpointUrl}}</td>
+                                                <td>{{port.methodType}}</td>
+                                                <td class="text-right">
+                                                    <button class="btn btn-brand btn-sm btn-youtube" type="button" (click)="removeApi(i)" style="margin-bottom: 4px">
+                                                                    <i class="fa fa-close"></i>
+                                                                </button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                        <div class="card-footer text-right">
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                            <!-- <input type="submit" class="btn btn-primary" value="Submit"> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-header">
+                        <!--  -->
+                        <i class="fa fa-align-justify"></i> All Groups
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-responsive-sm table-bordered table-striped table-sm">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th style="width: 20px;">ID</th>
+                                    <th class="text-left">Docker Name</th>
+                                    <th class="text-left">Image</th>
+                                    <th class="text-left">IP Address</th>
+                                    <th class="text-left">Type</th>
+                                    <th class="text-left">Users</th>
+                                    <th class="text-left">Endpoint / MethodType</th>
+                                    <th class="text-left">Protocol / InternalPort : ExternalPort</th>
+                                    <th class="text-left">Status</th>
+                                    <th style="width: 150px;">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of dockerInfoList;let i=index ">
+                                    <td scope="row">{{item.id}}</td>
+                                    <td class="text-left">{{item.name}}</td>
+                                    <td class="text-left">{{item.image}}</td>
+                                    <td class="text-left">{{item.ipaddress}}</td>
+                                    <td class="text-left">{{item.dockertype}}</td>
+                                    <td class="text-left">{{item.username}}</td>
+                                    <td class="text-left">
+                                        <div *ngFor="let i of item.userList">
+                                            <span>{{i[0]}}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                            <span *ngIf="i[1] === 'UP'" class="row  badge badge-success">{{i[1]}}</span>
+                                            <span *ngIf="i[1] === 'DOWN'" class="row  badge badge-danger">{{i[1]}}</span>
+                                        </div>
+                                    </td>
+                                    <td class="text-left">
+                                        <div *ngFor="let i of item.endpointList">
+                                            <span>{{i[0]}}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                            <span *ngIf="i[1] === 'UP'" class="row  badge badge-success">{{i[1]}}</span>
+                                            <span *ngIf="i[1] === 'DOWN'" class="row  badge badge-danger">{{i[1]}}</span>
+                                        </div>
+                                    </td>
+                                    <td class="text-left">
+                                        <div *ngFor="let i of item.portList">
+                                            <span>{{i[0]}}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                            <span *ngIf="i[1] === 'UP'" class="row  badge badge-success">{{i[1]}}</span>
+                                            <span *ngIf="i[1] === 'DOWN'" class="row  badge badge-danger">{{i[1]}}</span>
+                                        </div>
+                                    </td>
+                                    <td *ngIf="item.status === 'UP'" style="color: #039c03">{{item.status}}</td>
+                                    <td *ngIf="item.status === 'DOWN'" style="color:red">{{item.status}}</td>
+                                    <td *ngIf="item.status === null" style="color:red">{{''}}</td>
+                                    <td class="text-center">
+                                        <button class="btn btn-brand btn-sm btn-primary" type="button" style="margin-bottom: 4px">
+                                              <i class="fa fa-pencil-square-o"></i>
+                                          </button>
+                                        <button class="btn btn-brand btn-sm btn-youtube" type="button" style="margin-bottom: 4px">
+                                              <i class="fa fa-close"></i>
+                                          </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<!-- <app-confirmation-modal (hideModal)="modalConfirmation($event)" #confirmModal></app-confirmation-modal> -->

@@ -1,0 +1,92 @@
+<div class="row">
+
+    <!-- Form -->
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header"><strong><span *ngIf="mode=='add'"> Add New </span> <span *ngIf="mode=='edit'">Update </span> User</strong></div>
+            <div class="card-body">
+
+                <div *ngIf="isSubmitted">
+                    <div class="alert alert-success" *ngIf="isSuccess">
+                        <strong> {{_statusMsg}} Please Wait ..</strong>.
+                    </div>
+
+                    <div class="alert alert-danger" *ngIf="!isSuccess ">
+                        <strong>{{_statusMsg}}</strong>
+                    </div>
+                </div>
+
+                <form [formGroup]="productForm" (ngSubmit)="submitForm()" novalidate>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label>Product Name</label>
+                                <input type="text" formControlName="productName" class="form-control" [ngClass]="{'is-invalid': productForm.get('productName').touched && productForm.get('productName').invalid}">
+                                <div class="invalid-feedback">
+                                    <div>User Name is required</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label>Product Description </label>
+                                <input type="text" formControlName="productDescription" class="form-control" [ngClass]="{'is-invalid': productForm.get('productDescription').touched && productForm.get('productDescription').invalid}">
+                                <div class="invalid-feedback">
+                                    <div>User Email is required</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label>Price </label>
+                                <input type="text" formControlName="price" class="form-control" [ngClass]="{'is-invalid': productForm.get('price').touched && productForm.get('price').invalid}">
+                                <div class="invalid-feedback">
+                                    <div>User Email is required</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label>Picture </label>
+                                <input type="file" id="file-input" name="file-input" (change)="fileChange($event)">
+                                <div class="invalid-feedback">
+                                    <div>User Email is required</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label>Status</label>
+                                <select class="form-control" formControlName="status" [ngClass]="{'is-invalid': productForm.get('status').touched && productForm.get('status').invalid}">
+                                  <option value="">--Select--</option>
+                                  <option>Active</option>
+                                  <option>Inactive</option>
+                              </select>
+                                <div class="invalid-feedback">
+                                    <div>Status is required</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>

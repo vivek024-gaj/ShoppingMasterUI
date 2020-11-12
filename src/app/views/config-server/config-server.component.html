@@ -1,0 +1,44 @@
+<div class="accordion" id="accordionExample">
+    <div class="card" *ngFor="let i of applications;let rowIndex = index">
+        <div class="card-header" [id]="i.name">
+            <h2 class="mb-0">
+                <button class="btn btn-link collapsed" type="button" data-toggle="collapse" [attr.data-target]="'#'+i.id" aria-expanded="false" [attr.aria-controls]="i.id" (click)="getAppPropertiesById(i.id)">
+            {{i.name}}
+          </button>
+            </h2>
+        </div>
+        <div [id]="i.id" class="collapse" [attr.aria-labelledby]="i.name" data-parent="#accordionExample">
+            <div class="card-body">
+                <table class="table table-sm table-bordered">
+                    <thead>
+                        <tr class="text-center">
+                            <th scope="col" class="mat-h4">#</th>
+                            <th scope="col" class="mat-h4">Env Profile</th>
+                            <th scope="col" class="mat-h4">Lable</th>
+                            <th scope="col" class="mat-h4">Property Name</th>
+                            <th scope="col" class="mat-h4">Property Value</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody *ngFor="let ap of appProperties; let i = index">
+                        <tr>
+                            <td>{{i + 1}}</td>
+                            <td>{{ap.envProfile}}</td>
+                            <td>{{ap.label}}</td>
+                            <td>{{ap.attrKey}}</td>
+                            <td>{{ap.attrValue}}</td>
+                            <td class="text-center">
+                                <button class="btn btn-brand btn-sm btn-primary" type="button" style="margin-bottom: 4px" title="EDIT">
+                                            <i class="fa fa-pencil-square-o"></i>
+                                        </button>
+                                <button class="btn btn-brand btn-sm btn-youtube" type="button" style="margin-bottom: 4px" title="DELETE">
+                                            <i class="fa fa-close"></i>
+                                        </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

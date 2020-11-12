@@ -1,0 +1,128 @@
+<div class="animated fadeIn">
+    <form [formGroup]="libraryForm" (ngSubmit)="submitForm()" novalidate>
+        <div class="row">
+            <!-- Form -->
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header"><strong>Add Library</strong><small> Form</small>
+                        <div class="card-header-actions">
+                            <button class="btn btn-primary btn-sm move-right" [routerLink]="['/config/library/configure-lib']">
+                              Add Properties</button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+
+                        <div *ngIf="isSubmitted">
+                            <div class="alert alert-success" *ngIf="isSuccess">
+                                <strong> {{_statusMsg}} Please Wait ..</strong>.
+                            </div>
+
+                            <div class="alert alert-danger" *ngIf="!isSuccess ">
+                                <strong>{{_statusMsg}}</strong>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label>Library Name</label>
+                                    <input type="text" value="" name="name" formControlName="name" class="form-control" [ngClass]="{'is-invalid': libraryForm.get('name').touched && libraryForm.get('name').invalid}">
+
+                                    <div class="invalid-feedback">
+                                        <div>Please Enter Library Name</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <input type="submit" class="btn btn-primary" value="Submit">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-header">
+                        <!--  -->
+                        <i class="fa fa-align-justify"></i> All Libraries
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-responsive-sm table-bordered table-striped table-sm accordion" id="accordionExample">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th style="width: 20px;">ID</th>
+                                    <th>Name</th>
+                                    <th style="width: 100px; text-align: right;">Action</th>
+                                </tr>
+                            </thead>
+
+                            <!-- <tbody>
+                                <tr *ngFor="let lib of libraryList; let i = index ">
+                                    <td>{{i+1}}</td>
+                                    <td class="collapsed" data-toggle="collapse" [attr.data-target]="'#'+lib.id" aria-expanded="false" [attr.aria-controls]="lib.id" title="Click to Expand">{{lib.name}}
+                                        <table [id]="lib.id" class="collapse table table-sm table-bordered" [attr.aria-labelledby]="lib.name" data-parent="#accordionExample">
+                                            <thead>
+                                                <tr class="text-center">
+                                                    <th scope="col" class="mat-h4">#</th>
+                                                    <th scope="col" class="mat-h4">Env Profile</th>
+                                                    <th scope="col" class="mat-h4">Lable</th>
+                                                    <th scope="col" class="mat-h4">Property Name</th>
+                                                    <th scope="col" class="mat-h4">Property Value</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                        </table>
+                                    </td>
+                                    <td class="text-right">
+                                        <button class="btn btn-brand btn-sm btn-primary" type="button" style="margin-bottom: 4px" (click)="editLib(lib)">
+                                        <i class="fa fa-pencil-square-o"></i>
+                                    </button>
+                                        <button class="btn btn-brand btn-sm btn-youtube" type="button" (click)="deleteFieldValue(lib,lib.id)" style="margin-bottom: 4px">
+                                        <i class="fa fa-close"></i>
+                                    </button>
+                                    </td>
+                                </tr>
+                            </tbody> -->
+                            <div>{{libraryList}}</div>
+                            <tbody>
+                                <tr *ngFor="let lib of libraryList; let i = index ">
+                                    <!-- <td>{{i+1}}</td> -->
+                                    <td>{{lib.libName}}</td>
+                                    <!-- <td class="collapsed" data-toggle="collapse" [attr.data-target]="'#'+lib.id" aria-expanded="false" [attr.aria-controls]="lib.id" title="Click to Expand">{{lib.name}}
+                                        <table [id]="lib.id" class="collapse table table-sm table-bordered" [attr.aria-labelledby]="lib.name" data-parent="#accordionExample">
+                                            <thead>
+                                                <tr class="text-center">
+                                                    <th scope="col" class="mat-h4">#</th>
+                                                    <th scope="col" class="mat-h4">Env Profile</th>
+                                                    <th scope="col" class="mat-h4">Lable</th>
+                                                    <th scope="col" class="mat-h4">Property Name</th>
+                                                    <th scope="col" class="mat-h4">Property Value</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                        </table>
+                                    </td> -->
+                                    <td>{{lib}}</td>
+                                    <td class="text-right">
+                                        <button class="btn btn-brand btn-sm btn-primary" type="button" style="margin-bottom: 4px" (click)="editLib(lib)">
+                                        <i class="fa fa-pencil-square-o"></i>
+                                    </button>
+                                        <button class="btn btn-brand btn-sm btn-youtube" type="button" (click)="deleteFieldValue(lib,lib.id)" style="margin-bottom: 4px">
+                                        <i class="fa fa-close"></i>
+                                    </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<app-confirmation-modal (hideModal)="modalConfirmation($event)" #confirmModal></app-confirmation-modal>
