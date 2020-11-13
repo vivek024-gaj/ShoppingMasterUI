@@ -55,9 +55,7 @@ export class AddComponent implements OnInit {
   }
 
   fileChange(element) {
-    var file: File = element.target.files[0];
-    var idxDot = file.name.lastIndexOf('.') + 1;
-    var extFile = file.name.substr(idxDot, file.name.length).toLowerCase();
+    this.uploadFile = element.target.files[0];
   }
   addProduct() {
     this.shoppingService.addProduct(this.productForm.value, this.uploadFile).subscribe((res: any) => {

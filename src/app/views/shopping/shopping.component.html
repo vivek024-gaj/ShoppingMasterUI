@@ -30,10 +30,13 @@
         <a routerLink="/cart"><i class="fa fa-shopping-cart fa-4x" aria-hidden="true"></i><span class="badge badge-secondary" style="size: 50px;">1</span></a>
     </div>
 </nav>
+
+
+
 <div class="row">
     <div class="column" *ngFor="let p of productList">
         <div class="card" style="width: 18rem;">
-            <img class="card-img-top" src=".../100px180/" alt="Card image cap">
+            <img class="card-img-top" src="data:image/JPEG;base64,{{p.img}}" alt="Card image cap">
             <div class="card-body">
                 <h5 class="card-title">{{p.productName}} @ RS. {{p.price}}/-</h5>
                 <p class="card-text">{{p.productDescription}}</p>
